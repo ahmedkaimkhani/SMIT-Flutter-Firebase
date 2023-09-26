@@ -1,4 +1,5 @@
 import 'package:firebase_smit_flutter/home_view.dart';
+import 'package:firebase_smit_flutter/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeView(),
+      home: const LoginView(),
     );
   }
 }
