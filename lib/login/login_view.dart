@@ -1,3 +1,4 @@
+import 'package:firebase_smit_flutter/login/register/register_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -29,6 +30,17 @@ class LoginView extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(onPressed: () {}, child: const Text('Log in')),
+            const SizedBox(
+              height: 20,
+            ),
+            InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterView()));
+                },
+                child: const Text('Already have an account?'))
           ],
         ),
       ),

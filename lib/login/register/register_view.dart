@@ -12,7 +12,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Firebase Login'),
+        title: const Text('Firebase Register'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
