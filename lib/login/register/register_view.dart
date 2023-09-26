@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../home-view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -8,6 +11,26 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  register() async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeView(),
+          ));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,21 +42,27 @@ class _RegisterViewState extends State<RegisterView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
                   hintText: 'Email', border: OutlineInputBorder()),
             ),
             const SizedBox(
               height: 10,
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: passwordController,
+              decoration: const InputDecoration(
                   hintText: 'Password', border: OutlineInputBorder()),
             ),
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Register')),
+            ElevatedButton(
+                onPressed: () {
+                  register();
+                },
+                child: const Text('Register')),
           ],
         ),
       ),
