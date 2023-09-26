@@ -1,8 +1,11 @@
-import 'package:firebase_smit_flutter/home_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_smit_flutter/firebase_options.dart';
 import 'package:firebase_smit_flutter/login/login_view.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
