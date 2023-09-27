@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_smit_flutter/login/home-view.dart';
 import 'package:firebase_smit_flutter/login/register/register_view.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,14 @@ class _LoginViewState extends State<LoginView> {
   login() async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeView(),
+          ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -53,7 +61,11 @@ class _LoginViewState extends State<LoginView> {
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Log in')),
+            ElevatedButton(
+                onPressed: () {
+                  login();
+                },
+                child: const Text('Log in')),
             const SizedBox(
               height: 20,
             ),
