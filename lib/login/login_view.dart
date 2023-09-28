@@ -14,23 +14,27 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  bool isLogin = false;
+
   login() async {
     try {
+      isLogin = true;
+      setState(() {});
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-      Navigator.push(
+      await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const HomeView(),
           ));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+      isLogin = false;
+      setState(() {});
+    } catch (e) {
+      isLogin = false;
+      print(e);
+      setState(() {});
     }
   }
 
@@ -76,7 +80,9 @@ class _LoginViewState extends State<LoginView> {
                       MaterialPageRoute(
                           builder: (context) => const RegisterView()));
                 },
-                child: const Text('Already have an account?'))
+                child: const Text('Already have an account?')),
+            Visibility(
+                visible: isLogin, child: const CircularProgressIndicator()),
           ],
         ),
       ),
