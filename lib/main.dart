@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_smit_flutter/firebase_options.dart';
 import 'package:firebase_smit_flutter/login/login_view.dart';
+import 'package:firebase_smit_flutter/practice/add_user.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginView(),
+      home: const AddUsers(),
     );
   }
 }
