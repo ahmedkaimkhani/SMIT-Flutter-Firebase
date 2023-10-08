@@ -20,20 +20,6 @@ class _AddUsersState extends State<AddUsers> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String? validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    return null;
-  }
-
-  String? validateContact(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    return null;
-  }
-
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -50,41 +36,25 @@ class _AddUsersState extends State<AddUsers> {
     return null;
   }
 
-  signup() async {
+  logIn() async {
     try {
-      UserCredential credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      String userId = credential.user!.uid;
-
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'id': userId,
-        'name': nameController,
-        'contact': contactController,
-        'email': emailController
-      });
-
-      Utils().toastMessage('Account created');
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      Utils().toastMessage('Login successful');
 
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const HomeViews(),
           ));
-      setState(() {});
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        // print('The password provided is too weak.');
+      if (e.code == 'user-not-found') {
         Utils().toastMessage(e.toString());
-      } else if (e.code == 'email-already-in-use') {
-        // print('The account already exists for that email.');
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
         Utils().toastMessage(e.toString());
+        print('Wrong password provided for that user.');
       }
-    } catch (e) {
-      // print(e);
-      Utils().toastMessage(e.toString());
     }
   }
 
@@ -92,7 +62,7 @@ class _AddUsersState extends State<AddUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Users'),
+        title: Text('Log in'),
       ),
       body: Column(
         children: [
@@ -102,14 +72,6 @@ class _AddUsersState extends State<AddUsers> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      validator: validateName,
-                      decoration: InputDecoration(hintText: 'Name'),
-                    ),
-                    TextFormField(
-                      validator: validateContact,
-                      decoration: InputDecoration(hintText: 'Contact'),
-                    ),
                     TextFormField(
                       validator: validateEmail,
                       decoration: InputDecoration(hintText: 'Email'),
@@ -124,10 +86,10 @@ class _AddUsersState extends State<AddUsers> {
           ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  signup();
+                  logIn();
                 }
               },
-              child: Text('Sign up'))
+              child: Text('log in'))
         ],
       ),
     );
