@@ -60,6 +60,7 @@ class _AddUsersState extends State<AddUsers> {
       String userId = credential.user!.uid;
 
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'id': userId,
         'name': nameController,
         'contact': contactController,
         'email': emailController
@@ -72,6 +73,7 @@ class _AddUsersState extends State<AddUsers> {
           MaterialPageRoute(
             builder: (context) => const HomeViews(),
           ));
+      setState(() {});
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         // print('The password provided is too weak.');
@@ -121,7 +123,9 @@ class _AddUsersState extends State<AddUsers> {
           ),
           ElevatedButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+                if (_formKey.currentState!.validate()) {
+                  signup();
+                }
               },
               child: Text('Sign up'))
         ],
