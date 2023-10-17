@@ -104,19 +104,19 @@ class _AddUsersState extends State<AddUsers> {
                   children: [
                     TextFormField(
                       validator: validateName,
-                      decoration: InputDecoration(hintText: 'Name'),
+                      decoration: const InputDecoration(hintText: 'Name'),
                     ),
                     TextFormField(
                       validator: validateContact,
-                      decoration: InputDecoration(hintText: 'Contact'),
+                      decoration: const InputDecoration(hintText: 'Contact'),
                     ),
                     TextFormField(
                       validator: validateEmail,
-                      decoration: InputDecoration(hintText: 'Email'),
+                      decoration: const InputDecoration(hintText: 'Email'),
                     ),
                     TextFormField(
                       validator: validatePassword,
-                      decoration: InputDecoration(hintText: 'Password'),
+                      decoration: const InputDecoration(hintText: 'Password'),
                     ),
                   ],
                 )),
