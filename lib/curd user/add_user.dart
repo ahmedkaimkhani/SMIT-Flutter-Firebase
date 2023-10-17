@@ -15,7 +15,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
   addUsers() {
     FirebaseFirestore.instance
         .collection('users')
-        .add({'name': 'Ahmed', 'contact': '031571863'})
+        .add({'name': 'Usman', 'contact': '031571863'})
         .then((value) => Utils().toastMessage('User data added successfully'))
         .onError((error, stackTrace) => Utils().toastMessage('$e'));
   }
@@ -29,19 +29,36 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
         },
         child: const Icon(Icons.add),
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('users').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print(snapshot.data!.docs.toString());
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return const ListTile();
-              },
-            );
-          }
-          return const CircularProgressIndicator();
-        },
+      body: SafeArea(
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print(snapshot.data!.docs.toString());
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot abc = snapshot.data!.docs[index];
+                  print(abc.id);
+                  return ListTile(
+                    title: Text('${abc['name']}  ${abc.id}'),
+                    subtitle: Text('${abc['contact']}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                            onPressed: () {}, icon: const Icon(Icons.edit)),
+                        IconButton(
+                            onPressed: () {}, icon: const Icon(Icons.delete))
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
