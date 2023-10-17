@@ -18,7 +18,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
   addUsers() {
     FirebaseFirestore.instance
         .collection('users')
-        .add({'name': nameController, 'contact': contactController})
+        .add({'name': nameController.text, 'contact': contactController.text})
         .then((value) => Utils().toastMessage('User data added successfully'))
         .onError((error, stackTrace) => Utils().toastMessage('$e'));
     nameController.clear();
@@ -79,7 +79,13 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                         IconButton(
                             onPressed: () {}, icon: const Icon(Icons.edit)),
                         IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.delete))
+                            onPressed: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(abc.id)
+                                  .delete();
+                            },
+                            icon: const Icon(Icons.delete))
                       ],
                     ),
                   );
