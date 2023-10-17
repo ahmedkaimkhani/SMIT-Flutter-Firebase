@@ -21,6 +21,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
         .add({'name': nameController, 'contact': contactController})
         .then((value) => Utils().toastMessage('User data added successfully'))
         .onError((error, stackTrace) => Utils().toastMessage('$e'));
+    nameController.clear();
+    contactController.clear();
   }
 
   @override
@@ -33,7 +35,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
             context: context,
             builder: (context) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -43,7 +46,11 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                     TextField(
                       controller: contactController,
                     ),
-                    ElevatedButton(onPressed: () {}, child: const Text('Add'))
+                    ElevatedButton(
+                        onPressed: () {
+                          addUsers();
+                        },
+                        child: const Text('Add'))
                   ],
                 ),
               );
