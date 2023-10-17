@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_smit_flutter/curd%20user/add_user.dart';
 import 'package:firebase_smit_flutter/firebase_options.dart';
 import 'package:firebase_smit_flutter/login/register/register_view.dart';
+import 'package:firebase_smit_flutter/practice/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterView(),
+      home: const CurdAddUsers(),
     );
   }
 }
