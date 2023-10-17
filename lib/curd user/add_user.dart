@@ -18,7 +18,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
   addUsers() {
     FirebaseFirestore.instance
         .collection('users')
-        .add({'name': 'Usman', 'contact': '031571863'})
+        .add({'name': nameController, 'contact': contactController})
         .then((value) => Utils().toastMessage('User data added successfully'))
         .onError((error, stackTrace) => Utils().toastMessage('$e'));
   }
@@ -37,8 +37,12 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TextField(),
-                    const TextField(),
+                    TextField(
+                      controller: nameController,
+                    ),
+                    TextField(
+                      controller: contactController,
+                    ),
                     ElevatedButton(onPressed: () {}, child: const Text('Add'))
                   ],
                 ),
