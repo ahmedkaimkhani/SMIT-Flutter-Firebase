@@ -12,6 +12,9 @@ class CurdAddUsers extends StatefulWidget {
 }
 
 class _CurdAddUsersState extends State<CurdAddUsers> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
+
   addUsers() {
     FirebaseFirestore.instance
         .collection('users')
@@ -25,7 +28,23 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          addUsers();
+          // addUsers();
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const TextField(),
+                    const TextField(),
+                    ElevatedButton(onPressed: () {}, child: const Text('Add'))
+                  ],
+                ),
+              );
+            },
+          );
         },
         child: const Icon(Icons.add),
       ),
