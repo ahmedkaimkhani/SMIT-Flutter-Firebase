@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_smit_flutter/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../home-view.dart';
@@ -24,7 +25,7 @@ class _RegisterViewState extends State<RegisterView> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeView(),
+            builder: (context) => const HomeScreen(),
           ));
     } catch (e) {
       print(e);

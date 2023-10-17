@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_smit_flutter/login/home-view.dart';
 import 'package:firebase_smit_flutter/practice/home_view.dart';
 import 'package:firebase_smit_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
