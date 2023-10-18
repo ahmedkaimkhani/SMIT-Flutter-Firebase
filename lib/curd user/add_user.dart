@@ -38,6 +38,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
             {'name': nameController.text, 'contact': contactController.text})
         .then((value) => Utils().toastMessage('Data updated'))
         .onError((error, stackTrace) => Utils().toastMessage(e.toString()));
+    contactController.clear();
+    nameController.clear();
   }
 
   customBottomSheet() {
@@ -81,6 +83,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
           customBottomSheet();
           setState(() {
             isUpdate = false;
+            nameController.clear();
+            contactController.clear();
           });
         },
         child: const Icon(Icons.add),
