@@ -27,7 +27,33 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
     contactController.clear();
   }
 
-  // customBottomSheet() {}
+  customBottomSheet() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+              ),
+              TextField(
+                controller: contactController,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    addUsers();
+                  },
+                  child: const Text('Add'))
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,32 +61,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // addUsers();
-          // customBottomSheet();
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: nameController,
-                    ),
-                    TextField(
-                      controller: contactController,
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          addUsers();
-                        },
-                        child: const Text('Add'))
-                  ],
-                ),
-              );
-            },
-          );
+          customBottomSheet();
         },
         child: const Icon(Icons.add),
       ),
@@ -84,7 +85,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              // customBottomSheet();
+                              customBottomSheet();
                             },
                             icon: const Icon(Icons.edit)),
                         IconButton(
