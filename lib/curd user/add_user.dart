@@ -16,6 +16,7 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
   TextEditingController contactController = TextEditingController();
 
   bool isUpdate = false;
+  String userUpdateId = '';
 
   addUsers() {
     FirebaseFirestore.instance
@@ -27,6 +28,16 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
         );
     nameController.clear();
     contactController.clear();
+  }
+
+  updateUser(userUpdateId) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userUpdateId)
+        .update(
+            {'name': nameController.text, 'contact': contactController.text})
+        .then((value) => Utils().toastMessage('Data updated'))
+        .onError((error, stackTrace) => Utils().toastMessage(e.toString()));
   }
 
   customBottomSheet() {
@@ -48,11 +59,12 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
               ElevatedButton(
                   onPressed: () {
                     if (isUpdate) {
+                      updateUser(userUpdateId);
                     } else {
                       addUsers();
                     }
                   },
-                  child: const Text('Add'))
+                  child: Text(isUpdate ? 'Update' : 'Add'))
             ],
           ),
         );
@@ -67,6 +79,9 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
         onPressed: () {
           // addUsers();
           customBottomSheet();
+          setState(() {
+            isUpdate = false;
+          });
         },
         child: const Icon(Icons.add),
       ),
@@ -90,8 +105,12 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              nameController.text = abc['name'];
-                              contactController.text = abc['contact'];
+                              setState(() {
+                                isUpdate = true;
+                                nameController.text = abc['name'];
+                                contactController.text = abc['contact'];
+                              });
+                              userUpdateId = abc.id;
                               customBottomSheet();
                             },
                             icon: const Icon(Icons.edit)),
