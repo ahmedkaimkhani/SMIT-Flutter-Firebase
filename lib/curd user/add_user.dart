@@ -15,6 +15,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
   TextEditingController nameController = TextEditingController();
   TextEditingController contactController = TextEditingController();
 
+  bool isUpdate = false;
+
   addUsers() {
     FirebaseFirestore.instance
         .collection('users')
@@ -45,7 +47,10 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    addUsers();
+                    if (isUpdate) {
+                    } else {
+                      addUsers();
+                    }
                   },
                   child: const Text('Add'))
             ],
@@ -85,6 +90,8 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
                       children: [
                         IconButton(
                             onPressed: () {
+                              nameController.text = abc['name'];
+                              contactController.text = abc['contact'];
                               customBottomSheet();
                             },
                             icon: const Icon(Icons.edit)),
