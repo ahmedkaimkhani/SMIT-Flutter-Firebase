@@ -25,37 +25,40 @@ class _CurdAddUsersState extends State<CurdAddUsers> {
     contactController.clear();
   }
 
+  customBottomSheet() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+              ),
+              TextField(
+                controller: contactController,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    addUsers();
+                  },
+                  child: const Text('Add'))
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // addUsers();
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: nameController,
-                    ),
-                    TextField(
-                      controller: contactController,
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          addUsers();
-                        },
-                        child: const Text('Add'))
-                  ],
-                ),
-              );
-            },
-          );
         },
         child: const Icon(Icons.add),
       ),
